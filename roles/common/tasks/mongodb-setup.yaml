@@ -14,13 +14,13 @@
   when: component == "catalogue"
 
 - name: get the entries count
-  ansible.builtin.command:  mongo --host mongodb.shivarampractise.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+  ansible.builtin.command:  mongo --host mongodb.shivarampractise.online --quiet --eval 'db = db.getSiblingDB("user"); db.products.count()'
   register: entries_count
   when: component == "user"
 
-# - name: print the count
-#   ansible.builtin.debug:
-#     msg: "product count: {{product_count}}"
+- name: print the count
+  ansible.builtin.debug:
+    msg: "entries count: {{entries_count}}"
 
 - name: load {{component}} data
   ansible.builtin.command: mongo --host mongodb.shivarampractise.online < /app/schema/{{component}}.js
