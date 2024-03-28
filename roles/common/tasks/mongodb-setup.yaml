@@ -8,14 +8,14 @@
     name: mongodb-org-shell
     state: present
 
-- name: get the entries count
-  ansible.builtin.command:  mongo --host mongodb.shivarampractise.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
-  register: entries_count
+- name: get the catalogue entries count
+  ansible.builtin.shell:  mongo --host mongodb.shivarampractise.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+  register: products_count
   when: component == "catalogue"
 
-- name: get the entries count
-  ansible.builtin.command:  mongo --host mongodb.shivarampractise.online --quiet --eval 'db = db.getSiblingDB("user"); db.products.count()'
-  register: entries_count
+- name: get the user entries count
+  ansible.builtin.shell:  mongo --host mongodb.shivarampractise.online --quiet --eval 'db = db.getSiblingDB("user"); db.products.count()'
+  register: users_count
   when: component == "user"
 
 - name: print the count
@@ -24,5 +24,9 @@
 
 - name: load {{component}} data
   ansible.builtin.command: mongo --host mongodb.shivarampractise.online < /app/schema/{{component}}.js
-  when: product_count.stdout == "0" # keep double quotes
+  when: product_count.stdout == "0" and component == "catalogue" # keep double quotes
+
+- name: load {{component}} data
+  ansible.builtin.command: mongo --host mongodb.shivarampractise.online < /app/schema/{{component}}.js
+  when: product_count.stdout == "0" and component == "user" # keep double quotes
 
