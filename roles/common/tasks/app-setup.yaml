@@ -12,7 +12,7 @@
     path: /app
     state: directory
 
-- name: download {{component}} application
+- name: download {{component}} application #here component is variable
   ansible.builtin.get_url:
     url: https://roboshop-builds.s3.amazonaws.com/{{component}}.zip
     dest: /tmp
