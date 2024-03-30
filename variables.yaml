@@ -1,2 +1,3 @@
 MONGODB_HOST: mongodb.shivarampractise.online
 REDIS_HOST: redis.shivarampractise.online
+CATALOGUE_HOST: catalogue.shivarampractise.online
